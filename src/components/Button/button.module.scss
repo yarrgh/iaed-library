@@ -1,21 +1,69 @@
 .button {
-  font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: inherit;
   font-weight: 700;
   border: 0;
-  border-radius: 3em;
+  border-radius: 0;
   cursor: pointer;
   display: inline-block;
+  box-sizing: border-box;
   line-height: 1;
+  background-color: var(--bg);
+  color: var(--clr);
+  padding: 0.5em 1em;
+  text-decoration: none;
+  font-size: var(--size, 1.11rem);
+  font-weight: 400;
+
+  &:hover,
+  &:focus {
+    background-color: var(--bg-hover);
+    color: var(--clr-hover);
+  }
+
+  &.primary {
+    --clr: hsl(0, 0%, 100%);
+    --clr-hover: hsl(0, 0%, 100%);
+    --bg: hsl(281, 66%, 19%);
+    --bg-hover: hsl(281, 66%, 40%);
+  }
+
+  &.accent {
+    --clr: hsl(281, 66%, 19%);
+    --clr-hover: hsl(281, 66%, 19%);
+    --bg: hsl(47, 100%, 50%);
+    --bg-hover: hsl(47, 100%, 65%);
+  }
+
+  &.xsmall {
+    --size: 0.89rem;
+  }
+
+  &.small {
+    --size: 1rem;
+  }
+
+  &.medium {
+    --size: 1.11rem;
+  }
+
+  &.large {
+    --size: 1.22rem;
+  }
+
+  &.xlarge {
+    --size: 1.46rem;
+  }
+
+  &:disabled,
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+
+    --bg-hover: var(--bg);
+    --clr-hover: var(--clr);
+  }
 }
-.storybook-button--primary {
-  color: white;
-  background-color: #1ea7fd;
-}
-.storybook-button--secondary {
-  color: #333;
-  background-color: transparent;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
-}
+
 .storybook-button--small {
   font-size: 12px;
   padding: 10px 16px;

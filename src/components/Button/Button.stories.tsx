@@ -1,37 +1,55 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import React from "react";
+import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { Button } from './Button';
+import { Button } from "./Button";
 
 export default {
-  title: 'Example/Button',
+  title: "Example/Button",
   component: Button,
   argTypes: {
-    backgroundColor: { control: 'color' },
+    variant: { control: "inline-radio", defaultValue: "primary" },
+    type: { control: "inline-radio", defaultValue: "button" },
+    size: { control: "select", defaultValue: "medium" },
+    href: {
+      defaultValue: "",
+    },
+    active: { defaultValue: false },
+    disabled: { defaultValue: false },
+    disableMobileFullWidth: { defaultValue: false },
   },
 } as ComponentMeta<typeof Button>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: ComponentStory<typeof Button> = (args) => (
+  <Button {...args}>Button</Button>
+);
 
 export const Primary = Template.bind({});
 Primary.args = {
-  primary: true,
-  label: 'Button',
+  variant: "primary",
+  size: "medium",
+  onClick: () => alert("You clicked the button"),
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  label: 'Button',
+export const Accent = Template.bind({});
+Accent.args = {
+  variant: "accent",
+  size: "medium",
+  onClick: () => alert("You clicked the button"),
 };
 
 export const Large = Template.bind({});
 Large.args = {
-  size: 'large',
-  label: 'Button',
+  size: "large",
+  onClick: () => alert("You clicked the button"),
 };
 
 export const Small = Template.bind({});
 Small.args = {
-  size: 'small',
-  label: 'Button',
+  size: "small",
+  onClick: () => alert("You clicked the button"),
+};
+
+export const Link = Template.bind({});
+Link.args = {
+  href: "https://google.com",
 };
