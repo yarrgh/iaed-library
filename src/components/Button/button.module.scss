@@ -13,6 +13,7 @@
   text-decoration: none;
   font-size: var(--size, 1.11rem);
   font-weight: 400;
+  user-select: none;
 
   &:hover,
   &:focus {
@@ -20,18 +21,54 @@
     color: var(--clr-hover);
   }
 
+  .btnContent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .iconSpin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    & > * {
+      animation: spin 1s linear infinite;
+      margin: 0;
+      padding: 0;
+      transform-origin: 50% 50.5%;
+      height: 1em;
+      width: 1em;
+    }
+  }
+
   &.primary {
     --clr: hsl(0, 0%, 100%);
     --clr-hover: hsl(0, 0%, 100%);
-    --bg: hsl(281, 66%, 19%);
-    --bg-hover: hsl(281, 66%, 40%);
+    --bg: var(--clr-primary-500);
+    --bg-hover: var(--clr-primary-400);
   }
 
   &.accent {
-    --clr: hsl(281, 66%, 19%);
-    --clr-hover: hsl(281, 66%, 19%);
+    --clr: var(--clr-primary-500);
+    --clr-hover: var(--clr);
     --bg: hsl(47, 100%, 50%);
     --bg-hover: hsl(47, 100%, 65%);
+  }
+
+  &.danger {
+    --clr: hsl(0, 0%, 100%);
+    --bg: var(--clr-fire-600);
+    --clr-hover: hsl(0, 0%, 100%);
+    --bg-hover: var(--clr-fire-500);
+  }
+
+  &.dangerInverse {
+    --clr: var(--clr-fire-500);
+    --bg: transparent;
+    --clr-hover: hsl(0, 0%, 100%);
+    --bg-hover: var(--clr-fire-500);
   }
 
   &.xsmall {
@@ -62,17 +99,4 @@
     --bg-hover: var(--bg);
     --clr-hover: var(--clr);
   }
-}
-
-.storybook-button--small {
-  font-size: 12px;
-  padding: 10px 16px;
-}
-.storybook-button--medium {
-  font-size: 14px;
-  padding: 11px 20px;
-}
-.storybook-button--large {
-  font-size: 16px;
-  padding: 12px 24px;
 }

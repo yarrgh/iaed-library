@@ -22,12 +22,19 @@ export default {
 
 const Template: ComponentStory<typeof Dropdown> = (args) => (
   <Dropdown {...args}>
-    <Dropdown.Trigger>
-      <Button>Custom Dropdown</Button>
-    </Dropdown.Trigger>
-    <Dropdown.Menu>This is the custom menu</Dropdown.Menu>
+    {/* <Dropdown.Trigger>
+      <span>sdfsdfsdfsdf</span>
+    </Dropdown.Trigger> */}
+    {/* <Dropdown.Menu>
+      <div>
+        <h1>sdfsdfsdf</h1>
+        <p>sdfsdfsdf</p>
+      </div>
+    </Dropdown.Menu> */}
   </Dropdown>
 );
 
 export const Primary = Template.bind({});
 Primary.args = {};
+export const Primary2 = Template.bind({});
+Primary2.args = {};

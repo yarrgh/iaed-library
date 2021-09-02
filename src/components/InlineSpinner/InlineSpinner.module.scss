@@ -1,0 +1,64 @@
+@function get-dash-value($radius, $percentage) {
+  // Using $radius, calculate circumference.
+  $circumference: 2 * 3.1415927 * $radius;
+
+  // Convert percentage to decimal.
+  // i.e. 50% = 0.5.
+
+  // Return unit value.
+  @return $circumference * $percentage;
+}
+
+.inlineSpinner {
+  display: inline-block;
+  animation: 1.8s linear infinite inlineSvgSpin;
+  width: 1.1em;
+  height: 1.1em;
+  line-height: 0.9;
+
+  circle {
+    animation: 2.2s ease-in-out infinite both inlineCircleSpin;
+    display: block;
+    fill: transparent;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-dasharray: get-dash-value(21, 1);
+    stroke-dashoffset: get-dash-value(21, 1);
+    stroke-width: 6px;
+    transform-origin: 50% 50%;
+  }
+}
+
+// SVG animation.
+@keyframes inlineSvgSpin {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+// Circle animation.
+@keyframes inlineCircleSpin {
+  0%,
+  25% {
+    // stroke-dashoffset: 280;
+    stroke-dashoffset: get-dash-value(21, 0.85);
+    transform: rotate(0);
+  }
+
+  50%,
+  55% {
+    // stroke-dashoffset: 75;
+    stroke-dashoffset: get-dash-value(21, 0.15);
+    transform: rotate(40deg);
+    // transform: rotate(540deg);
+  }
+
+  100% {
+    // stroke-dashoffset: 280;
+    stroke-dashoffset: get-dash-value(21, 85%);
+    transform: rotate(360deg);
+  }
+}

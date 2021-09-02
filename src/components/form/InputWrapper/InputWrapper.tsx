@@ -1,14 +1,18 @@
 import { Label } from "../Label/Label";
 import React, { ReactNode } from "react";
 import styles from "./InputWrapper.module.scss";
+import classNames from "classnames";
+import { Hint } from "../Hint/Hint";
 
 export interface InputWrapperProps {
   label?: string;
   children: ReactNode;
-  className?: string;
   required?: boolean;
   withBorder?: boolean;
   withPadding?: boolean;
+  className?: string;
+  error?: string;
+  hint?: string;
 }
 
 /**
@@ -16,25 +20,28 @@ export interface InputWrapperProps {
  */
 export const InputWrapper = ({
   label,
-  className,
   required,
   children,
   withBorder,
   withPadding,
+  className,
+  error,
+  hint,
 }: InputWrapperProps) => {
-  const classList: string[] = [
-    "wrapper",
-    withBorder ? "withBorder" : "",
-    withPadding ? "withPadding" : "",
-  ];
-  const classNames = classList
-    .filter((x) => !!x)
-    .map((x) => styles[x])
-    .join(" ");
   return (
-    <div className={`${classNames} ${className}`}>
-      {children}
-      {label && <Label required={required}>{label}</Label>}
+    <div className={className}>
+      <div
+        className={classNames(styles.wrapper, {
+          [styles.withBorder]: withBorder,
+          [styles.withPadding]: withPadding,
+          [styles.error]: error,
+        })}
+      >
+        {children}
+        {label && <Label required={required}>{label}</Label>}
+      </div>
+      {!error && hint && <Hint>{hint}</Hint>}
+      {error && <Hint isError>{error}</Hint>}
     </div>
   );
 };

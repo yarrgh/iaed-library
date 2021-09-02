@@ -1,26 +1,26 @@
-import React, { ComponentProps, forwardRef, ReactNode } from "react";
+import React, { forwardRef, SelectHTMLAttributes } from "react";
 import { InputWrapper } from "../InputWrapper/InputWrapper";
 import { Label } from "../Label/Label";
 
 import styles from "./Select.module.scss";
 
-export interface SelectProps extends ComponentProps<"select"> {
-  children: ReactNode;
+export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
-  required?: boolean;
+  error?: string;
+  hint?: string;
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  ({ label, children, name, className, required, ...props }, ref) => {
-    const classList: string[] = ["input"];
-    const classNames = classList.map((x) => styles[x]).join(" ");
-
+  (
+    { label, children, name, className, required, error, hint, ...props },
+    ref
+  ) => {
     return (
-      <InputWrapper className={className} withBorder>
+      <InputWrapper className={className} withBorder error={error} hint={hint}>
         <select
           id={name}
           name={name}
-          className={classNames}
+          className={styles.input}
           {...props}
           ref={ref}
         >

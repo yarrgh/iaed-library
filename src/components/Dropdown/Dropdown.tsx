@@ -62,13 +62,13 @@ export const Dropdown = ({ children }: DropdownProps) => {
     | ReactElement
     | undefined;
 
-  Trigger ??= <Dropdown.Trigger>Default Trigger</Dropdown.Trigger>;
+  Trigger ??= <Dropdown.Trigger>You forgot to add a Trigger</Dropdown.Trigger>;
 
   let Menu = childList.find(({ type }: any) => type === Dropdown.Menu) as
     | ReactElement
     | undefined;
 
-  Menu ??= <Dropdown.Menu>Default Menu</Dropdown.Menu>;
+  Menu ??= <Dropdown.Menu>You forgot to add a Menu</Dropdown.Menu>;
 
   return (
     <DropdownProvider>

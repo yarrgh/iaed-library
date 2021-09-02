@@ -1,11 +1,12 @@
-import React, { FC, MouseEvent, MouseEventHandler, SFC } from "react";
-import { Link } from "react-router-dom";
-import classes from "./button.module.scss";
+import classNames from "classnames";
+import { InlineSpinner } from "components/InlineSpinner/InlineSpinner";
+import React, { ButtonHTMLAttributes, ComponentType, forwardRef } from "react";
+import styles from "./button.module.scss";
 
 /**
  * Button style name
  */
-export type ButtonVariant = "primary" | "accent";
+export type ButtonVariant = "primary" | "accent" | "danger" | "dangerInverse";
 
 /**
  * Button type
@@ -17,8 +18,7 @@ export type ButtonType = "submit" | "reset" | "button";
  */
 export type ButtonSize = "xsmall" | "small" | "medium" | "large" | "xlarge";
 
-export interface ButtonProps {
-
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Sets the button variant type
    * @default primary
@@ -37,105 +37,46 @@ export interface ButtonProps {
    */
   size?: ButtonSize;
 
-  /**
-   * Disables changing the width of the button to 100% on mobile screens
-   * @default false
-   */
-  disableMobileFullWidth?: boolean;
-
-  /**
-   * Configures the button to behave as a link with the provided href
-   * @default undefined
-   */
-  href?: string;
-
-  /**
-   * Sets the button's disabled attribute
-   * @default false
-   */
-  disabled?: boolean;
-
-  /**
-   * Sets the button's click handler
-   */
-  onClick?: (e: MouseEvent) => void;
+  isLoading?: boolean;
+  icon?: ComponentType;
 }
 
-export interface StyledButtonProps {
-  block?: boolean;
-  buttonStyle?: ButtonVariant;
-  size?: ButtonSize;
-  disableModuleFullWidth?: boolean;
-}
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      variant: buttonStyle = "primary",
+      size = "medium",
+      disabled,
+      isLoading,
+      children,
+      icon,
+      ...rest
+    },
+    ref
+  ) => {
+    const ButtonIcon = isLoading ? InlineSpinner : icon;
 
-function isRelativeLink(href: string) {
-  var r = new RegExp(/^(?:[a-z]+:)?\/\//, "i");
-  console.log({ testResult: !r.test(href), href });
-  return !r.test(href);
-}
-
-export const Button: FC<ButtonProps> = ({
-  variant: buttonStyle = "primary",
-  size = "medium",
-  children,
-  href,
-  disabled,
-  ...rest
-}) => {
-  const classList: string[] = [
-    "button",
-    buttonStyle,
-    size,
-    disabled ? "disabled" : "",
-  ];
-  const classNames = classList
-    .filter((x) => !!x)
-    .map((x) => classes[x])
-    .join(" ");
-
-  const clickHandler = (e: MouseEvent) => {
-    if (disabled) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    if (rest.onClick) {
-      rest.onClick(e);
-    }
-  };
-
-  if (href) {
-    if (isRelativeLink(href)) {
-      return (
-        <Link to={href} {...rest} onClick={clickHandler} className={classNames}>
-          <div>{children}</div>
-        </Link>
-      );
-    }
     return (
-      <a
-        href={href}
+      <button
         {...rest}
-        onClick={clickHandler}
-        target="_blank"
-        rel="noreferrer noopener"
-        className={classNames}
+        disabled={disabled || isLoading}
+        className={classNames(
+          styles.button,
+          [styles[buttonStyle]],
+          [styles[size]],
+          {
+            [styles.disabled]: disabled,
+          }
+        )}
+        ref={ref}
       >
-        <div>{children}</div>
-      </a>
+        <div className={styles.btnContent}>
+          {ButtonIcon && <ButtonIcon />}
+          <div>{children}</div>
+        </div>
+      </button>
     );
   }
-
-  return (
-    <button
-      {...rest}
-      onClick={clickHandler}
-      disabled={disabled}
-      className={classNames}
-    >
-      <div>{children}</div>
-    </button>
-  );
-};
+);
 
 Button.displayName = "Button";

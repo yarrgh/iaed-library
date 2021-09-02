@@ -1,12 +1,21 @@
 .wrapper {
   position: relative;
+  --border-color: #ccc;
+
+  &:focus-within {
+    --border-color: var(--clr-primary-500);
+  }
 }
 
 .withBorder {
   border-radius: 0;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
 }
 
 .withPadding {
   padding: 0.5em;
+}
+
+.error {
+  --border-color: var(--clr-fire-500);
 }

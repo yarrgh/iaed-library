@@ -1,8 +1,9 @@
+import classNames from "classnames";
 import React, { ComponentProps } from "react";
 
 import styles from "./Label.module.scss";
 
-export interface LabelProps extends ComponentProps<"label"> {
+export interface LabelProps extends Partial<ComponentProps<"label">> {
   /**
    * Adds required asterisk to the label
    * @default false
@@ -11,10 +12,12 @@ export interface LabelProps extends ComponentProps<"label"> {
 }
 
 export const Label = ({ children, required, id, ...props }: LabelProps) => {
-  const classList: string[] = ["label", required ? "required" : ""];
-  const classNames = classList.map((x) => styles[x]).join(" ");
   return (
-    <label className={classNames} id={id} {...props}>
+    <label
+      className={classNames(styles.label, { [styles.required]: required })}
+      id={id}
+      {...props}
+    >
       {children}
     </label>
   );
